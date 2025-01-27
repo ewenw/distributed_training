@@ -11,8 +11,6 @@ logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s',  # Format of log messages
 )
 
-rank = int(os.environ["RANK"])
-world_size = int(os.environ["WORLD_SIZE"])
 
 class MockDataset(Dataset):
     def __init__(self, features, N):
@@ -71,6 +69,8 @@ def train(model):
             if rank == 0:
                 logging.info(f"Loss: {loss}")
                 
+rank = int(os.environ["RANK"])
+world_size = int(os.environ["WORLD_SIZE"])
 
 if __name__ == "__main__":
     dist.init_process_group(
@@ -82,3 +82,4 @@ if __name__ == "__main__":
     model = TinyAllReduceModel(50)
     logging.info(f"Rank {rank} is ready")
     train(model)
+    dist.destroy_process_group()

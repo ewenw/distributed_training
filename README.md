@@ -18,12 +18,23 @@ conda activate dt_env
 conda install pip -y
 pip install -r requirements.txt
 ```
-### 3. Running Distributed Training
-Use torchrun to launch distributed training scripts. Below is an example command:
+## Data Parallel Example
+![img.png](data_parallel.png)
 
-
-`torchrun --nproc_per_node=10 --nnodes=1 data_parallel_all_reduce.py`
+`torchrun --nproc_per_node=10 --nnodes=1 data_parallel_scratch.py`
 
 --nproc_per_node: Number of processes to run on each node (e.g., number of GPUs).
 
 --nnodes: Total number of nodes in the distributed setup (set to 1 for single-node training).
+
+## Model Parallel Example
+![img.png](model_parallel.png)
+
+`torchrun --nproc_per_node=2 --nnodes=1 model_parallel_scratch.py`
+
+--nproc_per_node: Number of processes to run on each node (e.g., number of GPUs).
+
+--nnodes: Total number of nodes in the distributed setup (set to 1 for single-node training).
+
+
+![img.png](pipeline_parallel.png)
